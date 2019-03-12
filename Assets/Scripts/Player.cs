@@ -21,7 +21,7 @@ public class Player : MonoBehaviour
 	private Transform[] groundPoints;
 
 	[SerializeField]
-	private float groundRadius;
+	private float groundRadius = 0.2f;
 
 	[SerializeField]
 	private LayerMask WhatIsGround;
@@ -30,8 +30,10 @@ public class Player : MonoBehaviour
 
 	private bool jump;
 
+	private bool jumpAttack;
+
 	[SerializeField]
-	private bool airControl;
+	private bool airControl = false;
 
 	[SerializeField]
 	private float jumpForce = 400;
@@ -91,10 +93,18 @@ public class Player : MonoBehaviour
 
 	private void HandleAttacks()
 	{
-		if(attack && !this.playerAnimator.GetCurrentAnimatorStateInfo(0).IsTag("Player_attack") && !this.playerAnimator.GetCurrentAnimatorStateInfo(0).IsName("Player_slide"))
+		if(attack && isGrounded && !this.playerAnimator.GetCurrentAnimatorStateInfo(0).IsTag("Player_attack") && !this.playerAnimator.GetCurrentAnimatorStateInfo(0).IsName("Player_slide"))
 		{
 			playerAnimator.SetTrigger("Player_attack");
 			playerRigidbody.velocity = Vector2.zero;
+		}
+		if(jumpAttack && !isGrounded && !this.playerAnimator.GetCurrentAnimatorStateInfo(1).IsName("Player_jump_attack"))
+		{
+			playerAnimator.SetBool("Player_jump_attack", true);
+		}
+		if(!jumpAttack && !this.playerAnimator.GetCurrentAnimatorStateInfo(1).IsName("Player_jump_attack"))
+		{
+			playerAnimator.SetBool("Player_jump_attack", false);
 		}
 	}
 
@@ -103,6 +113,7 @@ public class Player : MonoBehaviour
 		if(Input.GetKeyDown(KeyCode.A))
 		{
 			attack = true;
+			jumpAttack = true;
 		}
 
 		if (Input.GetKeyDown(KeyCode.LeftShift))
@@ -135,6 +146,7 @@ public class Player : MonoBehaviour
 		attack = false;
 		slide = false;
 		jump = false;
+		jumpAttack = false;
 	}
 
 	private bool IsGrounded()
