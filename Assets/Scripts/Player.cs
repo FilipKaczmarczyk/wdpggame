@@ -4,6 +4,20 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+	private static Player instance;
+
+	public static Player Instance
+	{
+		get
+		{
+			if (instance == null)
+			{
+				instance = GameObject.FindObjectOfType<Player>();
+			}
+			return instance;
+		}
+	}
+
 	private Rigidbody2D playerRigidbody;
 
 	private Animator playerAnimator;
@@ -37,8 +51,8 @@ public class Player : MonoBehaviour
 
 	[SerializeField]
 	private float jumpForce = 400;
-	
-    void Start()
+
+	void Start()
     {
 		directionRight = true;
 		playerRigidbody = GetComponent<Rigidbody2D>();
