@@ -60,7 +60,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\LandBehaviour.cs" />
+    <Compile Include="Assets\AnimationsBehaviours\AttackBehaviour.cs" />
+    <Compile Include="Assets\AnimationsBehaviours\JumpBehaviour.cs" />
+    <Compile Include="Assets\AnimationsBehaviours\LandBehaviour.cs" />
+    <Compile Include="Assets\AnimationsBehaviours\SlideBehaviour.cs" />
     <Compile Include="Assets\Scripts\CameraFollow.cs" />
     <Compile Include="Assets\Scripts\ColliderTrigger.cs" />
     <Compile Include="Assets\Scripts\Player.cs" />
