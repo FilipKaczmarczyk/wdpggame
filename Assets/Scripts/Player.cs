@@ -23,6 +23,9 @@ public class Player : MonoBehaviour
 	private Animator playerAnimator;
 
 	[SerializeField]
+	private Transform fireballPosition;
+
+	[SerializeField]
 	private float movementSpeed = 10;
 
 	private bool directionRight;
@@ -114,7 +117,6 @@ public class Player : MonoBehaviour
 		if (Input.GetKeyDown(KeyCode.S))
 		{
 			playerAnimator.SetTrigger("Player_skill");
-			SpellCast(0);
 		}
 	}
 
@@ -166,15 +168,18 @@ public class Player : MonoBehaviour
 
 	public void SpellCast(int value)
 	{
-		if (directionRight)
+		if ((!OnGround && value == 1) || (OnGround && value == 0))
 		{
-			GameObject tmp = (GameObject)Instantiate(firePrefab, transform.position, Quaternion.identity);
-			tmp.GetComponent<Fireball>().Initialize(Vector2.right);
-		}
-		else
-		{
-			GameObject tmp = (GameObject)Instantiate(firePrefab, transform.position, Quaternion.Euler(new Vector3(0, 0, 180)));
-			tmp.GetComponent<Fireball>().Initialize(Vector2.left);
+			if (directionRight)
+			{
+				GameObject tmp = (GameObject)Instantiate(firePrefab, fireballPosition.position, Quaternion.identity);
+				tmp.GetComponent<Fireball>().Initialize(Vector2.right);
+			}
+			else
+			{
+				GameObject tmp = (GameObject)Instantiate(firePrefab, fireballPosition.position, Quaternion.Euler(new Vector3(0, 0, 180)));
+				tmp.GetComponent<Fireball>().Initialize(Vector2.left);
+			}
 		}
 	}
 }
