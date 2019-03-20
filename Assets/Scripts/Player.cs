@@ -42,6 +42,9 @@ public class Player : MonoBehaviour
 	[SerializeField]
 	private float jumpForce = 500;
 
+	[SerializeField]
+	private GameObject firePrefab;
+
 	public Rigidbody2D PlayerRigibody { get; set; }
 
 	public bool Attack { get; set; }
@@ -108,9 +111,10 @@ public class Player : MonoBehaviour
 			playerAnimator.SetTrigger("Player_jump");
 		}
 
-		if (Input.GetKeyDown(KeyCode.S) && OnGround)
+		if (Input.GetKeyDown(KeyCode.S))
 		{
 			playerAnimator.SetTrigger("Player_skill");
+			SpellCast(0);
 		}
 	}
 
@@ -157,6 +161,20 @@ public class Player : MonoBehaviour
 		else
 		{
 			playerAnimator.SetLayerWeight(1, 0);
+		}
+	}
+
+	public void SpellCast(int value)
+	{
+		if (directionRight)
+		{
+			GameObject tmp = (GameObject)Instantiate(firePrefab, transform.position, Quaternion.identity);
+			tmp.GetComponent<Fireball>().Initialize(Vector2.right);
+		}
+		else
+		{
+			GameObject tmp = (GameObject)Instantiate(firePrefab, transform.position, Quaternion.Euler(new Vector3(0, 0, 180)));
+			tmp.GetComponent<Fireball>().Initialize(Vector2.left);
 		}
 	}
 }

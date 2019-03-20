@@ -66,6 +66,7 @@
     <Compile Include="Assets\AnimationsBehaviours\SlideBehaviour.cs" />
     <Compile Include="Assets\Scripts\CameraFollow.cs" />
     <Compile Include="Assets\Scripts\ColliderTrigger.cs" />
+    <Compile Include="Assets\Scripts\Fireball.cs" />
     <Compile Include="Assets\Scripts\Player.cs" />
     <Reference Include="Unity.TextMeshPro.Editor">
       <HintPath>C:/Users/HappyArroW/Documents/wdpggame/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>

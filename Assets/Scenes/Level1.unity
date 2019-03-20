@@ -3853,6 +3853,8 @@ MonoBehaviour:
     m_Bits: 55
   airControl: 1
   jumpForce: 400
+  firePrefab: {fileID: 2517022156504492155, guid: 9c3ff66280d06eb44882257936383e99,
+    type: 3}
 --- !u!61 &1695887170
 BoxCollider2D:
   m_ObjectHideFlags: 0
