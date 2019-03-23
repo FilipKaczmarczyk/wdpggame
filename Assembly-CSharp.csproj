@@ -65,9 +65,17 @@
     <Compile Include="Assets\AnimationsBehaviours\LandBehaviour.cs" />
     <Compile Include="Assets\AnimationsBehaviours\SlideBehaviour.cs" />
     <Compile Include="Assets\Scripts\CameraFollow.cs" />
+    <Compile Include="Assets\Scripts\Character.cs" />
     <Compile Include="Assets\Scripts\ColliderTrigger.cs" />
-    <Compile Include="Assets\Scripts\Fireball.cs" />
+    <Compile Include="Assets\Scripts\Enemy.cs" />
+    <Compile Include="Assets\Scripts\Enemy_states\IdleState.cs" />
+    <Compile Include="Assets\Scripts\Enemy_states\IEnemyState.cs" />
+    <Compile Include="Assets\Scripts\Enemy_states\MeleeState.cs" />
+    <Compile Include="Assets\Scripts\Enemy_states\PatrolState.cs" />
+    <Compile Include="Assets\Scripts\Enemy_states\RangedState.cs" />
+    <Compile Include="Assets\Scripts\IgnoreCollision.cs" />
     <Compile Include="Assets\Scripts\Player.cs" />
+    <Compile Include="Assets\Scripts\Weapon.cs" />
     <Reference Include="Unity.TextMeshPro.Editor">
       <HintPath>C:/Users/HappyArroW/Documents/wdpggame/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
     </Reference>

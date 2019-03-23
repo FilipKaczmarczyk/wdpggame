@@ -4,10 +4,10 @@ using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
 
-public class Fireball : MonoBehaviour
+public class Weapon : MonoBehaviour
 {
 	[SerializeField]
-	private float speed = 10;
+	private float speed = 20;
 
 	private Rigidbody2D fireRigibody;
 

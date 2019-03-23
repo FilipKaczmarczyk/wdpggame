@@ -20,7 +20,7 @@ public class SlideBehaviour : StateMachineBehaviour
 	override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
 	{
 		Player.Instance.Slide = false;
-		animator.ResetTrigger("Player_slide");
+		animator.ResetTrigger("slide");
 	}
 
 	// OnStateMove is called right after Animator.OnAnimatorMove()

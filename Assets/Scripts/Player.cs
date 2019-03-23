@@ -4,7 +4,7 @@ using UnityEngine;
 
 #pragma warning disable 0649
 
-public class Player : MonoBehaviour
+public class Player : Character
 {
 	private static Player instance;
 
@@ -19,16 +19,6 @@ public class Player : MonoBehaviour
 			return instance;
 		}
 	}
-
-	private Animator playerAnimator;
-
-	[SerializeField]
-	private Transform fireballPosition;
-
-	[SerializeField]
-	private float movementSpeed = 10;
-
-	private bool directionRight;
 
 	[SerializeField]
 	private Transform[] groundPoints;
@@ -45,12 +35,7 @@ public class Player : MonoBehaviour
 	[SerializeField]
 	private float jumpForce = 500;
 
-	[SerializeField]
-	private GameObject firePrefab;
-
 	public Rigidbody2D PlayerRigibody { get; set; }
-
-	public bool Attack { get; set; }
 
 	public bool Slide { get; set; }
 
@@ -58,15 +43,22 @@ public class Player : MonoBehaviour
 
 	public bool OnGround { get; set; }
 
-	void Start()
+	private Vector2 startPos;
+
+	public override void Start()
     {
-		directionRight = true;
+		base.Start();
+		startPos = transform.position;
 		PlayerRigibody = GetComponent<Rigidbody2D>();
-		playerAnimator = GetComponent<Animator>();
     }
 
 	void Update()
 	{ 
+		if (transform.position.y <= -14f)
+		{
+			PlayerRigibody.velocity = Vector2.zero;
+			transform.position = startPos;
+		}
 		HandleInput();
 	}
 
@@ -83,7 +75,7 @@ public class Player : MonoBehaviour
 	{
 		if (PlayerRigibody.velocity.y < 0)
 		{
-			playerAnimator.SetBool("Player_land", true);
+			MyAnimator.SetBool("land", true);
 		}
 		if ((!Attack && !Slide && (OnGround || airControl)))
 		{
@@ -94,29 +86,29 @@ public class Player : MonoBehaviour
 			PlayerRigibody.AddForce(new Vector2(0, jumpForce));
 		}
 
-		playerAnimator.SetFloat("Player_speed", Mathf.Abs(horizontal));
+		MyAnimator.SetFloat("speed", Mathf.Abs(horizontal));
 	}
 
 	private void HandleInput()
 	{
 		if(Input.GetKeyDown(KeyCode.A))
 		{
-			playerAnimator.SetTrigger("Player_attack");
+			MyAnimator.SetTrigger("attack");
 		}
 
 		if (Input.GetKeyDown(KeyCode.LeftShift) && OnGround)
 		{
-			playerAnimator.SetTrigger("Player_slide");
+			MyAnimator.SetTrigger("slide");
 		}
 
 		if (Input.GetKeyDown(KeyCode.Space))
 		{
-			playerAnimator.SetTrigger("Player_jump");
+			MyAnimator.SetTrigger("jump");
 		}
 
 		if (Input.GetKeyDown(KeyCode.S))
 		{
-			playerAnimator.SetTrigger("Player_skill");
+			MyAnimator.SetTrigger("skill");
 		}
 	}
 
@@ -124,13 +116,11 @@ public class Player : MonoBehaviour
 	{
 		if((horizontal > 0 && !directionRight) || (horizontal < 0 && directionRight))
 		{
-			if(!this.playerAnimator.GetCurrentAnimatorStateInfo(0).IsTag("Player_attack") && !this.playerAnimator.GetCurrentAnimatorStateInfo(0).IsName("Player_slide"))
+			if(!Attack && !Slide)
 			{
-				directionRight = !directionRight;
-				Vector3 theScale = transform.localScale;
-				theScale.x *= -1;
-				transform.localScale = theScale;
+				ChangeDirection();
 			}
+
 		}
 	}
 
@@ -158,28 +148,19 @@ public class Player : MonoBehaviour
 	{
 		if (!OnGround)
 		{
-			playerAnimator.SetLayerWeight(1, 1);
+			MyAnimator.SetLayerWeight(1, 1);
 		}
 		else
 		{
-			playerAnimator.SetLayerWeight(1, 0);
+			MyAnimator.SetLayerWeight(1, 0);
 		}
 	}
 
-	public void SpellCast(int value)
+	public override void ThrowWeapon(int value)
 	{
 		if ((!OnGround && value == 1) || (OnGround && value == 0))
 		{
-			if (directionRight)
-			{
-				GameObject tmp = (GameObject)Instantiate(firePrefab, fireballPosition.position, Quaternion.identity);
-				tmp.GetComponent<Fireball>().Initialize(Vector2.right);
-			}
-			else
-			{
-				GameObject tmp = (GameObject)Instantiate(firePrefab, fireballPosition.position, Quaternion.Euler(new Vector3(0, 0, 180)));
-				tmp.GetComponent<Fireball>().Initialize(Vector2.left);
-			}
+			base.ThrowWeapon(value);
 		}
 	}
 }

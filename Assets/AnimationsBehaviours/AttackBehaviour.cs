@@ -16,7 +16,7 @@ public class AttackBehaviour : StateMachineBehaviour
 
 		if (!Player.Instance.OnGround)
 		{
-			animator.SetBool("Player_land", true);
+			animator.SetBool("land", true);
 		}
 	}
 
@@ -30,8 +30,8 @@ public class AttackBehaviour : StateMachineBehaviour
 	override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
 	{
 		Player.Instance.Attack = false;
-		animator.ResetTrigger("Player_attack");
-		animator.ResetTrigger("Player_skill");
+		animator.ResetTrigger("attack");
+		animator.ResetTrigger("skill");
 	}
 
 	// OnStateMove is called right after Animator.OnAnimatorMove()
