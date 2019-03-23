@@ -3,6 +3,7 @@
     Properties
     {
         _MainTex ("Texture", 2D) = "white" {}
+        _Brightness ("Brightness", float) = 1
     }
     SubShader
     {
@@ -34,6 +35,7 @@
 
             sampler2D _MainTex;
             float4 _MainTex_ST;
+            uniform float _Brightness;
 
             v2f vert (appdata v)
             {
@@ -46,11 +48,11 @@
 
             fixed4 frag (v2f i) : SV_Target
             {
-                // sample the texture
-                fixed4 col = tex2D(_MainTex, i.uv);
-                // apply fog
-                UNITY_APPLY_FOG(i.fogCoord, col);
-                return col;
+                fixed4 output = tex2D(_MainTex, i.uv);
+
+                output = output * _Brightness;
+                //output = (output - 0.5) * _Contrast + 0.5;
+                return output;
             }
             ENDCG
         }
