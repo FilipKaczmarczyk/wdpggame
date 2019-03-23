@@ -73,6 +73,7 @@
     <Compile Include="Assets\Scripts\Enemy_states\MeleeState.cs" />
     <Compile Include="Assets\Scripts\Enemy_states\PatrolState.cs" />
     <Compile Include="Assets\Scripts\Enemy_states\RangedState.cs" />
+    <Compile Include="Assets\Scripts\EnemySight.cs" />
     <Compile Include="Assets\Scripts\IgnoreCollision.cs" />
     <Compile Include="Assets\Scripts\Player.cs" />
     <Compile Include="Assets\Scripts\Weapon.cs" />
