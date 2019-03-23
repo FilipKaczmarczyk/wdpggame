@@ -15,8 +15,8 @@ public class LandBehaviour : StateMachineBehaviour
 	{
 		if(Player.Instance.OnGround)
 		{
-			animator.ResetTrigger("Player_jump");
-			animator.SetBool("Player_land", false);
+			animator.ResetTrigger("jump");
+			animator.SetBool("land", false);
 		}
 	}
 
