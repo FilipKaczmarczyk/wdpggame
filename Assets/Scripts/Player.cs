@@ -65,21 +65,28 @@ public class Player : Character
 
 	void Update()
 	{ 
-		if (transform.position.y <= -14f)
+		if(!TakingDamage && !IsDead)
 		{
-			PlayerRigibody.velocity = Vector2.zero;
-			transform.position = startPos;
+			if (transform.position.y <= -14f)
+			{
+				PlayerRigibody.velocity = Vector2.zero;
+				transform.position = startPos;
+			}
+			HandleInput();
 		}
-		HandleInput();
+		
 	}
 
 	void FixedUpdate()
     {
-		float horizontal = Input.GetAxis("Horizontal");
-		OnGround = IsGrounded();
-		HandleMovement(horizontal);
-		Flip(horizontal);
-		HandleLayers();
+		if (!TakingDamage && !IsDead)
+		{
+			float horizontal = Input.GetAxis("Horizontal");
+			OnGround = IsGrounded();
+			HandleMovement(horizontal);
+			Flip(horizontal);
+			HandleLayers();
+		}
     }
 
 	private void HandleMovement(float horizontal)
@@ -182,6 +189,17 @@ public class Player : Character
 
 	public override IEnumerator TakeDamage()
 	{
+		health -= 20;
+		if (!IsDead)
+		{
+			MyAnimator.SetTrigger("damage");
+		}
+		else
+		{
+			MyAnimator.SetLayerWeight(1, 0);
+			MyAnimator.SetTrigger("die");
+		}
+
 		yield return null;
 	}
 }

@@ -21,7 +21,7 @@ public abstract class Character : MonoBehaviour
 	protected int health = 100;
 
 	[SerializeField]
-	private EdgeCollider2D MainWeaponCollider;
+	private EdgeCollider2D mainWeaponCollider;
 
 	[SerializeField]
 	private List<string> damageSources;
@@ -33,6 +33,14 @@ public abstract class Character : MonoBehaviour
 	public bool TakingDamage { get; set; }
 
 	public Animator MyAnimator { get; private set; }
+
+	public EdgeCollider2D MainWeaponCollider
+	{
+		get
+		{
+			return mainWeaponCollider;
+		}
+	}
 
 	// Start is called before the first frame update
 	public virtual void Start()
@@ -71,7 +79,7 @@ public abstract class Character : MonoBehaviour
 
 	public void MeleeAttack()
 	{
-		MainWeaponCollider.enabled = !MainWeaponCollider.enabled;
+		MainWeaponCollider.enabled = true;
 	}
 
 	public virtual void OnTriggerEnter2D(Collider2D other)
