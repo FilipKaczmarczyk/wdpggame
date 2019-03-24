@@ -19,6 +19,11 @@ public class PatrolState : IEnemyState
 	{
 		Patrol();
 		enemy.Move();
+
+		if(enemy.Target != null && enemy.InThrowRange)
+		{
+			enemy.ChangeState(new RangedState());
+		}
 	}
 
 	public void Exit()
