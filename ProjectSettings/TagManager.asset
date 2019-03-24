@@ -5,6 +5,9 @@ TagManager:
   serializedVersion: 2
   tags:
   - Edge
+  - Fireball
+  - Knife
+  - Sword
   layers:
   - Default
   - TransparentFX

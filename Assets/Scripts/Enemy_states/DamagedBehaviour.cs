@@ -2,27 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AttackBehaviour : StateMachineBehaviour
+public class DamagedBehaviour : StateMachineBehaviour
 {
 	// OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
-	override public void OnStateEnter(Animator animator, AnimatorStateInfo stateinfo, int LayerIndex)
+	override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
 	{
-		animator.GetComponent<Character>().Attack = true;
-
-		animator.SetFloat("speed", 0);
-
-		if (animator.tag == "Player")
-		{
-			if (Player.Instance.OnGround)
-			{
-				Player.Instance.PlayerRigibody.velocity = Vector2.zero;
-			}
-		}
-
-		if (!Player.Instance.OnGround)
-		{
-			animator.SetBool("land", true);
-		}
+		animator.GetComponent<Character>().TakingDamage = true;
 	}
 
 	// OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
@@ -34,10 +19,7 @@ public class AttackBehaviour : StateMachineBehaviour
 	// OnStateExit is called when a transition ends and the state machine finishes evaluating this state
 	override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
 	{
-		animator.GetComponent<Character>().Attack = false;
-		animator.GetComponent<Character>().MeleeAttack();
-		animator.ResetTrigger("attack");
-		animator.ResetTrigger("skill");
+		animator.GetComponent<Character>().TakingDamage = false;
 	}
 
 	// OnStateMove is called right after Animator.OnAnimatorMove()

@@ -17,7 +17,20 @@ public abstract class Character : MonoBehaviour
 	[SerializeField]
 	private GameObject weaponPrefab;
 
+	[SerializeField]
+	protected int health = 100;
+
+	[SerializeField]
+	private EdgeCollider2D MainWeaponCollider;
+
+	[SerializeField]
+	private List<string> damageSources;
+
+	public abstract bool IsDead { get; }
+
 	public bool Attack { get; set; }
+
+	public bool TakingDamage { get; set; }
 
 	public Animator MyAnimator { get; private set; }
 
@@ -33,6 +46,8 @@ public abstract class Character : MonoBehaviour
     {
         
     }
+
+	public abstract IEnumerator TakeDamage();
 
 	public void ChangeDirection()
 	{
@@ -52,5 +67,19 @@ public abstract class Character : MonoBehaviour
 			GameObject tmp = (GameObject)Instantiate(weaponPrefab, weaponPosition.position, Quaternion.Euler(new Vector3(0, 0, 180)));
 			tmp.GetComponent<Weapon>().Initialize(Vector2.left);
 		}
+	}
+
+	public void MeleeAttack()
+	{
+		MainWeaponCollider.enabled = !MainWeaponCollider.enabled;
+	}
+
+	public virtual void OnTriggerEnter2D(Collider2D other)
+	{	
+		if (damageSources.Contains(other.tag))
+		{
+			StartCoroutine(TakeDamage());
+		}
+
 	}
 }

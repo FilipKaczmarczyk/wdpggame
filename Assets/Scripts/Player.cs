@@ -44,6 +44,16 @@ public class Player : Character
 
 	public bool OnGround { get; set; }
 
+	public override bool IsDead
+	{
+		get
+		{
+			return health <= 0;
+		}
+
+	}
+
+
 	private Vector2 startPos;
 
 	public override void Start()
@@ -168,5 +178,10 @@ public class Player : Character
 		{
 			base.ThrowWeapon(value);
 		}
+	}
+
+	public override IEnumerator TakeDamage()
+	{
+		yield return null;
 	}
 }
