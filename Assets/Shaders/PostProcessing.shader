@@ -4,6 +4,7 @@
     {
         _MainTex ("Texture", 2D) = "white" {}
 		_Brightness ("Brightness", float) = 1
+		_Contrast ("Contrast", float) = 1
     }
     SubShader
     {
@@ -40,11 +41,13 @@
 
             sampler2D _MainTex;
 			uniform float _Brightness;
+			uniform float _Contrast;
 
             fixed4 frag (v2f i) : SV_Target
             {
                 fixed4 col = tex2D(_MainTex, i.uv);
                 col = col * _Brightness;
+				col = (col - 0.5) * _Contrast + 0.5;
                 return col;
             }
             ENDCG

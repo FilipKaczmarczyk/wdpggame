@@ -11,6 +11,7 @@ public class PostProcessing : MonoBehaviour
     private void OnRenderImage(RenderTexture source, RenderTexture destination)
     {
         mat.SetFloat("_Brightness", brightness);
+        mat.SetFloat("_Contrast", contrast);
         Graphics.Blit(source, destination, mat);
     }
 
