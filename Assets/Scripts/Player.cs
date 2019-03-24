@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 #pragma warning disable 0649
 
@@ -110,7 +111,12 @@ public class Player : Character
 		{
 			MyAnimator.SetTrigger("skill");
 		}
-	}
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            SceneManager.LoadScene(0); // Main Menu
+        }
+    }
 
 	private void Flip(float horizontal)
 	{
