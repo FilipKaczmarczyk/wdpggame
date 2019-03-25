@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+#pragma warning disable 0649
+
 public class Enemy : Character
 {
 
@@ -14,6 +16,12 @@ public class Enemy : Character
 
 	[SerializeField]
 	private float throwRange = 12;
+
+	[SerializeField]
+	private Transform leftEdge;
+
+	[SerializeField]
+	private Transform rightEdge;
 
 	public bool InMeleeRange
 	{
@@ -55,6 +63,7 @@ public class Enemy : Character
 	public override void Start()
     {
 		base.Start();
+		Player.Instance.Dead += new DeadEventHandler(RemoveTarget);
 		ChangeState(new IdleState());
     }
 
@@ -70,6 +79,12 @@ public class Enemy : Character
 			LookAtTarget();
 		}
     }
+
+	private void RemoveTarget()
+	{
+		Target = null;
+		ChangeState(new PatrolState());
+	}
 
 	private void LookAtTarget()
 	{
@@ -99,8 +114,15 @@ public class Enemy : Character
 	{
 		if (!Attack)
 		{
-			MyAnimator.SetFloat("speed", 1);
-			transform.Translate(GetDirection() * (movementSpeed * Time.deltaTime));
+			if ((GetDirection().x > 0 && transform.position.x < rightEdge.position.x) || (GetDirection().x < 0 && transform.position.x > leftEdge.position.x))
+			{
+				MyAnimator.SetFloat("speed", 1);
+				transform.Translate(GetDirection() * (movementSpeed * Time.deltaTime));
+			}
+			else if (currentState is PatrolState)
+			{
+				ChangeDirection();
+			}
 		}
 	}
 
@@ -127,5 +149,10 @@ public class Enemy : Character
 			MyAnimator.SetTrigger("die");
 			yield return null;
 		}
+	}
+
+	public override void Death()
+	{
+		Destroy(gameObject);
 	}
 }

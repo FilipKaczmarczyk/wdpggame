@@ -5,9 +5,13 @@ using UnityEngine.SceneManagement;
 
 #pragma warning disable 0649
 
+public delegate void DeadEventHandler();
+
 public class Player : Character
 {
 	private static Player instance;
+
+	public event DeadEventHandler Dead;
 
 	public static Player Instance
 	{
@@ -36,6 +40,13 @@ public class Player : Character
 	[SerializeField]
 	private float jumpForce = 500;
 
+	private bool immortal = false;
+
+	private SpriteRenderer spriteRenderer;
+
+	[SerializeField]
+	private float immortalTime;
+
 	public Rigidbody2D PlayerRigibody { get; set; }
 
 	public bool Slide { get; set; }
@@ -48,6 +59,11 @@ public class Player : Character
 	{
 		get
 		{
+			if(health <= 0)
+			{
+				OnDead();
+			}
+
 			return health <= 0;
 		}
 
@@ -60,6 +76,8 @@ public class Player : Character
     {
 		base.Start();
 		startPos = transform.position;
+
+		spriteRenderer = GetComponent<SpriteRenderer>();
 		PlayerRigibody = GetComponent<Rigidbody2D>();
     }
 
@@ -69,8 +87,7 @@ public class Player : Character
 		{
 			if (transform.position.y <= -14f)
 			{
-				PlayerRigibody.velocity = Vector2.zero;
-				transform.position = startPos;
+				Death();
 			}
 			HandleInput();
 		}
@@ -88,6 +105,14 @@ public class Player : Character
 			HandleLayers();
 		}
     }
+
+	public void OnDead()
+	{
+		if (Dead != null)
+		{
+			Dead();
+		}
+	}
 
 	private void HandleMovement(float horizontal)
 	{
@@ -187,19 +212,46 @@ public class Player : Character
 		}
 	}
 
+	private IEnumerator IndicateImmoratal()
+	{
+		while (immortal)
+		{
+			spriteRenderer.enabled = false;
+			yield return new WaitForSeconds(.05f);
+			spriteRenderer.enabled = true;
+			yield return new WaitForSeconds(.05f);
+		}
+	}
+
 	public override IEnumerator TakeDamage()
 	{
-		health -= 20;
-		if (!IsDead)
+		if (!immortal)
 		{
-			MyAnimator.SetTrigger("damage");
-		}
-		else
-		{
-			MyAnimator.SetLayerWeight(1, 0);
-			MyAnimator.SetTrigger("die");
-		}
+			health -= 20;
+			if (!IsDead)
+			{
+				MyAnimator.SetTrigger("damage");
+				immortal = true;
+				StartCoroutine(IndicateImmoratal());
 
-		yield return null;
+				yield return new WaitForSeconds(immortalTime);
+				immortal = false;
+			}
+			else
+			{
+				MyAnimator.SetLayerWeight(1, 0);
+				MyAnimator.SetTrigger("die");
+			}
+
+			yield return null;
+		}
+	}
+
+	public override void Death()
+	{
+		PlayerRigibody.velocity = Vector2.zero;
+		MyAnimator.SetTrigger("idle");
+		health = 100;
+		transform.position = startPos;
 	}
 }

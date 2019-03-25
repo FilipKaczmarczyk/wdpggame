@@ -33,9 +33,9 @@ public class PatrolState : IEnemyState
 
 	public void OnTriggerEnter(Collider2D other)
 	{
-		if(other.tag == "Edge")
+		if (other.tag == "Fireball")
 		{
-			enemy.ChangeDirection();
+			enemy.Target = Player.Instance.gameObject;
 		}
 	}
 

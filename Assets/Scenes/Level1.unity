@@ -1171,6 +1171,7 @@ GameObject:
   m_Component:
   - component: {fileID: 733961464}
   - component: {fileID: 733961465}
+  - component: {fileID: 733961466}
   m_Layer: 8
   m_Name: SwordCollider
   m_TagString: EnemySword
@@ -1220,6 +1221,19 @@ EdgeCollider2D:
   - {x: 0.57431245, y: -1.1735321}
   - {x: 0.59416133, y: -0.47298992}
   - {x: 0.57331425, y: 0.48117873}
+--- !u!114 &733961466
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 733961463}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be2125b6279f05342927018e95afeb6d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetTag: Player
 --- !u!1 &746214049
 GameObject:
   m_ObjectHideFlags: 0
@@ -3160,7 +3174,7 @@ GameObject:
   - component: {fileID: 1435150047}
   m_Layer: 9
   m_Name: Enemy
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3271,7 +3285,9 @@ MonoBehaviour:
   - Fireball
   - Sword
   meleeRange: 3
-  throwRange: 12
+  throwRange: 15
+  leftEdge: {fileID: 2030902546}
+  rightEdge: {fileID: 1685100767}
 --- !u!61 &1435150045
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -4006,6 +4022,7 @@ GameObject:
   - component: {fileID: 1681009691}
   - component: {fileID: 1681009692}
   - component: {fileID: 1681009693}
+  - component: {fileID: 1681009694}
   m_Layer: 9
   m_Name: Sight
   m_TagString: Untagged
@@ -4040,7 +4057,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 7.124234, y: 4.0567245}
+  m_Offset: {x: 6.063961, y: 4.0567245}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -4051,7 +4068,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 16.508493, y: 2.4097297}
+  m_Size: {x: 18.62904, y: 2.40973}
   m_EdgeRadius: 0
 --- !u!114 &1681009692
 MonoBehaviour:
@@ -4079,6 +4096,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   other: {fileID: 1968971113}
+--- !u!50 &1681009694
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1681009689}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &1681897304
 GameObject:
   m_ObjectHideFlags: 0
@@ -4167,40 +4205,13 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1685100767}
-  - component: {fileID: 1685100766}
   m_Layer: 0
-  m_Name: Edge
+  m_Name: RightEdge
   m_TagString: Edge
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!61 &1685100766
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1685100765}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1}
-  m_EdgeRadius: 0
 --- !u!4 &1685100767
 Transform:
   m_ObjectHideFlags: 0
@@ -4209,7 +4220,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1685100765}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 6.825, y: 0.83500004, z: 0.16016932}
+  m_LocalPosition: {x: 6.65, y: 0.83500004, z: 0.16016932}
   m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_Children: []
   m_Father: {fileID: 1743852460}
@@ -4374,6 +4385,7 @@ MonoBehaviour:
     m_Bits: 55
   airControl: 1
   jumpForce: 800
+  immortalTime: 0.5
 --- !u!61 &1695887170
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -5202,6 +5214,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1968971112}
   - component: {fileID: 1968971113}
+  - component: {fileID: 1968971114}
   m_Layer: 8
   m_Name: SwordCollider
   m_TagString: Sword
@@ -5249,6 +5262,19 @@ EdgeCollider2D:
   - {x: -0.22205353, y: -0.8652605}
   - {x: 0.28589082, y: -0.3702324}
   - {x: 0.36780047, y: 0.6610037}
+--- !u!114 &1968971114
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1968971111}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be2125b6279f05342927018e95afeb6d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetTag: Enemy
 --- !u!1 &1970087660
 GameObject:
   m_ObjectHideFlags: 0
@@ -5337,40 +5363,13 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2030902546}
-  - component: {fileID: 2030902545}
   m_Layer: 0
-  m_Name: Edge
+  m_Name: LeftEdge
   m_TagString: Edge
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!61 &2030902545
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2030902544}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1}
-  m_EdgeRadius: 0
 --- !u!4 &2030902546
 Transform:
   m_ObjectHideFlags: 0
@@ -5379,7 +5378,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2030902544}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -5.1949997, y: 0.8699999, z: 0.16016932}
+  m_LocalPosition: {x: -4.92, y: 0.8699999, z: 0.16016932}
   m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_Children: []
   m_Father: {fileID: 1743852460}

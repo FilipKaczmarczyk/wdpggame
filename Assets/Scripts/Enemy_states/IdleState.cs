@@ -32,7 +32,10 @@ public class IdleState : IEnemyState
 
 	public void OnTriggerEnter(Collider2D other)
 	{
-		
+		if (other.tag == "Fireball")
+		{
+			enemy.Target = Player.Instance.gameObject;
+		}
 	}
 
 	private void Idle()
