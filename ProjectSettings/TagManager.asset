@@ -9,6 +9,8 @@ TagManager:
   - Knife
   - Sword
   - EnemySword
+  - Tip1
+  - Tip2
   layers:
   - Default
   - TransparentFX
