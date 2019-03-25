@@ -85,7 +85,8 @@ public abstract class Character : MonoBehaviour
 	}
 
 	public virtual void OnTriggerEnter2D(Collider2D other)
-	{	
+	{
+		Debug.Log("asdasd");
 		if (damageSources.Contains(other.tag))
 		{
 			StartCoroutine(TakeDamage());

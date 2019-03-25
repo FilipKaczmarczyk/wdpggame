@@ -263,6 +263,7 @@ public class Player : Character
 	{
 		if (other.gameObject.tag == "Soul")
 		{
+			GameManager.Instance.CollectedSouls++;
 			Destroy(other.gameObject);
 		}
 	}
