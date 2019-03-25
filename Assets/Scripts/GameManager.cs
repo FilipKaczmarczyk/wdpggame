@@ -69,7 +69,7 @@ public class GameManager : MonoBehaviour
 	// Update is called once per frame
 	void Update()
     {
-        if(CollectedSouls == 1)
+        if(CollectedSouls == 10)
 		{
 			over.color = new Color32(254, 152, 203, 255);
 			StartCoroutine(ChangeState());
