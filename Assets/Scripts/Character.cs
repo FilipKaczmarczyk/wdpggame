@@ -91,12 +91,5 @@ public abstract class Character : MonoBehaviour
 		{
 			StartCoroutine(TakeDamage());
 		}
-
-		if (other.gameObject.tag == "Soul")
-		{
-			GameManager.Instance.CollectedSouls++;
-			Destroy(other.gameObject);
-		}
-
 	}
 }
