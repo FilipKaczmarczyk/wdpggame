@@ -29,6 +29,8 @@ public class Enemy : Character
 	[SerializeField]
 	private Transform rightEdge;
 
+	private bool dead = false;
+
 	public bool InMeleeRange
 	{
 		get
@@ -152,19 +154,29 @@ public class Enemy : Character
 
 		} else
 		{
-			MyAnimator.SetTrigger("die");
-			yield return null;
+			if (dead == false)
+			{
+				StartCoroutine(SoulWait()); 
+				MyAnimator.SetTrigger("die");
+				yield return null;
+				dead = true;
+			}
 		}
 	}
 
 	public override void Death()
 	{
 		Destroy(gameObject);
-		spawnSoul();
 	}
 
-	public void spawnSoul()
+	public void SpawnSoul()
 	{
 		GameObject soul = (GameObject)Instantiate(soulPrefab, soulPosition.position, Quaternion.identity);
+	}
+
+	IEnumerator SoulWait()
+	{
+		yield return new WaitForSeconds(1);
+		SpawnSoul();
 	}
 }
