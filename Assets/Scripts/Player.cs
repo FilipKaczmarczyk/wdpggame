@@ -259,12 +259,4 @@ public class Player : Character
 		transform.position = startPos;
 	}
 
-	public override void OnTriggerEnter2D(Collider2D other)
-	{
-		if (other.gameObject.tag == "Soul")
-		{
-			GameManager.Instance.CollectedSouls++;
-			Destroy(other.gameObject);
-		}
-	}
 }
