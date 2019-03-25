@@ -12,6 +12,7 @@ TagManager:
   - Enemy
   - Tip1
   - Tip2
+  - Soul
   layers:
   - Default
   - TransparentFX

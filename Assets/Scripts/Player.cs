@@ -69,7 +69,6 @@ public class Player : Character
 
 	}
 
-
 	private Vector2 startPos;
 
 	public override void Start()
@@ -77,17 +76,22 @@ public class Player : Character
 		base.Start();
 		startPos = transform.position;
 
+
 		spriteRenderer = GetComponent<SpriteRenderer>();
 		PlayerRigibody = GetComponent<Rigidbody2D>();
     }
 
 	void Update()
-	{ 
+	{
 		if(!TakingDamage && !IsDead)
 		{
 			if (transform.position.y <= -14f)
 			{
 				Death();
+			}
+			if (transform.position.x <= -18.07543f)
+			{
+				transform.position = new Vector3(-18.07543f, transform.position.y, 0);
 			}
 			HandleInput();
 		}
@@ -253,5 +257,13 @@ public class Player : Character
 		MyAnimator.SetTrigger("idle");
 		health = 100;
 		transform.position = startPos;
+	}
+
+	public override void OnTriggerEnter2D(Collider2D other)
+	{
+		if (other.gameObject.tag == "Soul")
+		{
+			Destroy(other.gameObject);
+		}
 	}
 }

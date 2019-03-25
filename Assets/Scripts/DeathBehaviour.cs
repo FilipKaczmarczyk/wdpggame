@@ -11,7 +11,7 @@ public class DeathBehaviour : StateMachineBehaviour
 	[SerializeField]
 	private Collider2D fireball;
 
-	private float respawnTime = 5;
+	private float respawnTime = 2;
 	private float deathTimer;
 
 

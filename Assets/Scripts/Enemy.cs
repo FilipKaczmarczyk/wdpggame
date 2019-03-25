@@ -9,6 +9,12 @@ public class Enemy : Character
 
 	private IEnemyState currentState;
 
+	[SerializeField]
+	protected Transform soulPosition;
+
+	[SerializeField]
+	private GameObject soulPrefab;
+
 	public GameObject Target { get; set; }
 
 	[SerializeField]
@@ -154,5 +160,11 @@ public class Enemy : Character
 	public override void Death()
 	{
 		Destroy(gameObject);
+		spawnSoul();
+	}
+
+	public void spawnSoul()
+	{
+		GameObject soul = (GameObject)Instantiate(soulPrefab, soulPosition.position, Quaternion.identity);
 	}
 }
